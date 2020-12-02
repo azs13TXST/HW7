@@ -14,7 +14,19 @@ hash_test2 function
   Returns even_fn
 
 CollisionCounter function
-  
+  Initializes collision to 0
+  Initializes empty to 0
+  For loop to cycle through set
+    If bucket is empty
+      Increments empty
+    Else
+      Increments collisions
+  For loop to cycle through set
+    If bucket is empty
+      Increments empty
+    Else
+      Increments collisions
+  Returns collisions
 
 main function
   Declares set 1
@@ -44,8 +56,24 @@ int hash_test2(int n, unordered_set<int> set2)  {
   return even_fn; 
 }
 
-int CollisionCounter()  {
-  
+int CollisionCounter(unordered_set <int> set, unordered_set<int> set2)  {
+  int collisions = 0;
+  int empty = 0;
+
+  for (auto bucket = set.bucket_count(); bucket--); {
+    if (set.bucket_size(bucket) == 0)
+        empty++;
+    else
+        collisions += set.bucket_size(bucket) - 1;
+}
+
+  for (auto bucket = set2.bucket_count(); bucket--); {
+    if (set2.bucket_size(bucket) == 0)
+        empty++;
+    else
+        collisions += set2.bucket_size(bucket) - 1;
+  }
+  return collisions;
 }
 
 int main()  {
@@ -57,7 +85,7 @@ int main()  {
   hash_test(n, set);
   hash_test2(n, set2);
 
-  CollisionCounter(count, set);
+  CollisionCounter(set, set2);
 
   return 0;
 }
